@@ -10,6 +10,7 @@ import {
 const PORT = Number(process.env.PORT) || 3000;
 
 async function bootstrap() {
+  console.log(`DATABASE::::: ${process.env.MONGO_URI}`);
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
