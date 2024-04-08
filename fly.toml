@@ -1,0 +1,33 @@
+# fly.toml app configuration file generated for movies-api-movieflix on 2024-04-08T14:56:54-06:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'movies-api-movieflix'
+primary_region = 'qro'
+
+[experimental]
+  auto_rollback = true
+
+[build]
+  image = 'd4nilo/movies-api'
+
+[env]
+  MOVIES_SERVICE_PORT = "${MOVIES_SERVICE_PORT}"
+  PORT = "${APP_PORT}"
+  NODE_ENV = "production"
+  MONGO_URI = "${MONGO_URI}"
+
+[http_service]
+  internal_port = "${APP_PORT}"
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
+
+
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1
