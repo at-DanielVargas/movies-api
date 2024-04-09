@@ -37,4 +37,8 @@ export class MovieDto {
   @Expose()
   @ApiProperty()
   vote_count: number;
+
+  constructor(partial: Partial<MovieDto>) {
+    Object.assign(this, partial);
+  }
 }

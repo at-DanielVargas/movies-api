@@ -2,7 +2,6 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { plainToClass } from 'class-transformer';
 import { Observable, map } from 'rxjs';
-import { Genre } from 'types';
 import { GenreDto } from './dtos/genre.dto';
 import { MovieDto } from './dtos/movie.dro';
 
@@ -30,9 +29,9 @@ export class AppService {
    * Retreives a list of movie genres from movies microservice
    * @returns Observable<any>
    */
-  getMovieCategories(): Observable<Genre[]> {
+  getMovieCategories(): Observable<GenreDto[]> {
     return this.movieClient
-      .send<Genre[]>('get_movie_categories', '')
+      .send<GenreDto[]>('get_movie_categories', '')
       .pipe(
         map((response) =>
           response.map((genre) => plainToClass(GenreDto, genre)),
