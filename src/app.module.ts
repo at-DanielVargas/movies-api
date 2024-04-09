@@ -6,6 +6,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
 const MOVIES_SERVICE_PORT = Number(process.env.MOVIES_SERVICE_PORT) || 3001;
+const MICROSERVICE_HOST = process.env.MICROSERVICE_HOST || '::';
 
 @Module({
   imports: [
@@ -14,7 +15,7 @@ const MOVIES_SERVICE_PORT = Number(process.env.MOVIES_SERVICE_PORT) || 3001;
         name: 'MOVIES_SERVICE',
         transport: Transport.TCP,
         options: {
-          host: 'movies-microservice.internal',
+          host: MICROSERVICE_HOST,
           port: MOVIES_SERVICE_PORT,
         },
       },

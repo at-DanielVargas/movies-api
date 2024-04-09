@@ -13,6 +13,7 @@ primary_region = 'qro'
   image = 'd4nilo/movies-api'
 
 [env]
+  MICROSERVICE_HOST = "${MICROSERVICE_HOST}"
   MOVIES_SERVICE_PORT = "${MOVIES_SERVICE_PORT}"
   PORT = "${APP_PORT}"
   NODE_ENV = "production"

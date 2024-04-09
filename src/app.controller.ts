@@ -3,14 +3,16 @@ import { AppService } from './app.service';
 import {
   ApiOperation,
   ApiParam,
-  ApiProduces,
   ApiQuery,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
 import { GenreDto } from './dtos/genre.dto';
 import { Observable } from 'rxjs';
-import { MovieDto } from './dtos/movie.dro';
+import {
+  MovieCategoriesResponseDto,
+  TrendingResponseDto,
+} from './dtos/movie-categories.dto';
 
 @Controller('movies')
 @ApiTags('Movies')
@@ -32,14 +34,29 @@ export class AppController {
 
   @Get('search')
   @ApiQuery({ name: 'query', description: 'Search query' })
-  @ApiQuery({ name: 'page', description: 'Page number' })
+  @ApiQuery({ name: 'page', description: 'Page number', required: false })
   @ApiOperation({ summary: 'Search movies' })
-  @ApiResponse({ status: 200, description: 'Search results' })
+  @ApiResponse({
+    status: 200,
+    description: 'Search results',
+    type: MovieCategoriesResponseDto,
+  })
   searchMovies(
     @Query('query') query: string,
     @Query('page') page: number,
   ): any {
     return this.appService.searchMovies(query, page);
+  }
+
+  @Get('trending')
+  @ApiOperation({ summary: 'Get treanding movies' })
+  @ApiResponse({
+    status: 200,
+    description: 'Treanding movies',
+    type: TrendingResponseDto,
+  })
+  getTreandingMovies(): string {
+    return this.appService.getTreandingMovies();
   }
 
   @Get('by-category/:categoryId')
@@ -60,14 +77,12 @@ export class AppController {
   @ApiResponse({
     status: 200,
     description: 'All movies include the category id',
-    type: MovieDto,
-    isArray: true,
+    type: MovieCategoriesResponseDto,
   })
-  @ApiProduces('application/json')
   public byCategory(
     @Param('categoryId') id: number,
     @Query('page') page: number,
-  ): string {
+  ): any {
     return this.appService.getMoviesFromCategory(id, page);
   }
 
@@ -86,10 +101,11 @@ export class AppController {
     return this.appService.getMovie(id);
   }
 
-  @Get(':id/related')
+  @Get(':movieId/related')
+  @ApiParam({ name: 'movieId', description: 'Movie ID' })
   @ApiOperation({ summary: 'Get related movies' })
   @ApiResponse({ status: 200, description: 'Related movies' })
-  getRelatedMovies(id: number): string {
+  getRelatedMovies(@Param('movieId') id: number): string {
     return this.appService.getRelatedMovies(id);
   }
 }

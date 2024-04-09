@@ -33,6 +33,8 @@ async function bootstrap() {
     }),
   );
 
+  app.enableCors();
+
   await app.listen(PORT);
   Logger.log(`Server running on http://localhost:${PORT}`, 'Bootstrap');
 }
