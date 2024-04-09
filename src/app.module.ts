@@ -14,7 +14,7 @@ const MOVIES_SERVICE_PORT = Number(process.env.MOVIES_SERVICE_PORT) || 3001;
         name: 'MOVIES_SERVICE',
         transport: Transport.TCP,
         options: {
-          host: '::',
+          host: 'movies-microservice.internal',
           port: MOVIES_SERVICE_PORT,
         },
       },
